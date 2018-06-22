@@ -98,6 +98,12 @@ export class Dispatcher {
             type: ActionTypes.UpdateOrderExpiry,
         });
     }
+    public updateOrderMessage(message?: string): void {
+        this._dispatch({
+            data: message,
+            type: ActionTypes.UpdateOrderMessage,
+        });
+    }
     public encounteredBlockchainError(err: BlockchainErrs): void {
         this._dispatch({
             data: err,

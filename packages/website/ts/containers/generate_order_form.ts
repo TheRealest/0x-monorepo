@@ -23,6 +23,7 @@ interface ConnectedState {
     orderECSignature: ECSignature;
     userAddress: string;
     orderTakerAddress: string;
+    orderMessage: string;
     orderSalt: BigNumber;
     networkId: number;
     sideToAssetToken: SideToAssetToken;
@@ -36,6 +37,7 @@ const mapStateToProps = (state: State, _ownProps: GenerateOrderFormProps): Conne
     orderExpiryTimestamp: state.orderExpiryTimestamp,
     orderECSignature: state.orderECSignature,
     orderTakerAddress: state.orderTakerAddress,
+    orderMessage: state.orderMessage,
     orderSalt: state.orderSalt,
     networkId: state.networkId,
     sideToAssetToken: state.sideToAssetToken,

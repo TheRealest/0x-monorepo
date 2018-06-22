@@ -30,6 +30,7 @@ export interface State {
     orderExpiryTimestamp: BigNumber;
     orderFillAmount: BigNumber;
     orderTakerAddress: string;
+    orderMessage: string;
     orderECSignature: ECSignature;
     orderSalt: BigNumber;
     nodeVersion: string;
@@ -70,6 +71,7 @@ export const INITIAL_STATE: State = {
         v: 27,
     },
     orderTakerAddress: constants.NULL_ADDRESS,
+    orderMessage: '',
     orderSalt: generatePseudoRandomSalt(),
     nodeVersion: undefined,
     screenWidth: utils.getScreenWidth(),

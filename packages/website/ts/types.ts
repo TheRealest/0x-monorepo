@@ -124,6 +124,7 @@ export enum ActionTypes {
     RemoveTokenFromTokenByAddress = 'REMOVE_TOKEN_FROM_TOKEN_BY_ADDRESS',
     ForceTokenStateRefetch = 'FORCE_TOKEN_STATE_REFETCH',
     UpdateOrderExpiry = 'UPDATE_ORDER_EXPIRY',
+    UpdateOrderMessage = 'UPDATE_ORDER_MESSAGE',
     SwapAssetTokens = 'SWAP_ASSET_TOKENS',
     UpdateUserAddress = 'UPDATE_USER_ADDRESS',
     UpdateUserEtherBalance = 'UPDATE_USER_ETHER_BALANCE',

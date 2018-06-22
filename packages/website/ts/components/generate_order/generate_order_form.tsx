@@ -9,6 +9,7 @@ import * as React from 'react';
 import { Blockchain } from 'ts/blockchain';
 import { ExpirationInput } from 'ts/components/inputs/expiration_input';
 import { HashInput } from 'ts/components/inputs/hash_input';
+import { MessageInput } from 'ts/components/inputs/message_input';
 import { IdenticonAddressInput } from 'ts/components/inputs/identicon_address_input';
 import { TokenAmountInput } from 'ts/components/inputs/token_amount_input';
 import { TokenInput } from 'ts/components/inputs/token_input';
@@ -43,6 +44,7 @@ interface GenerateOrderFormProps {
     userAddress: string;
     orderECSignature: ECSignature;
     orderTakerAddress: string;
+    orderMessage: string;
     orderSalt: BigNumber;
     sideToAssetToken: SideToAssetToken;
     tokenByAddress: TokenByAddress;
@@ -86,6 +88,7 @@ export class GenerateOrderForm extends React.Component<GenerateOrderFormProps, G
         const exchangeContractIfExists = this.props.blockchain.getExchangeContractAddressIfExists();
         const initialTakerAddress =
             this.props.orderTakerAddress === constants.NULL_ADDRESS ? '' : this.props.orderTakerAddress;
+        const initialMessage = this.props.orderMessage;
         const rootClassName = this.props.isFullWidth ? 'clearfix mb2' : 'clearfix mb2 lg-px4 md-px4 sm-px2';
         return (
             <div className={rootClassName}>
@@ -179,6 +182,13 @@ export class GenerateOrderForm extends React.Component<GenerateOrderFormProps, G
                                 <HelpTooltip explanation={takerExplanation} />
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <MessageInput
+                            label="Message"
+                            initialMessage={initialMessage}
+                            updateOrderMessage={dispatcher.updateOrderMessage.bind(dispatcher)}
+                        />
                     </div>
                     <div>
                         <HashInput
