@@ -89,6 +89,18 @@ export class GenerateOrderForm extends React.Component<GenerateOrderFormProps, G
         const initialTakerAddress =
             this.props.orderTakerAddress === constants.NULL_ADDRESS ? '' : this.props.orderTakerAddress;
         const initialMessage = this.props.orderMessage;
+        const messageExplanation =
+            'This message field supports the following markdown-like syntax:<br> \
+                **bold**<br> \
+                _italic_<br> \
+            And the following tokens will be replaced with the corresponding<br> \
+            text or image from the order itself:<br> \
+                \<\<MAKER_TOKEN_SYMBOL>><br> \
+                \<\<MAKER_TOKEN_LOGO>><br> \
+                \<\<MAKER_TOKEN_AMOUNT>><br> \
+                \<\<TAKER_TOKEN_SYMBOL>><br> \
+                \<\<TAKER_TOKEN_LOGO>><br> \
+                \<\<TAKER_TOKEN_AMOUNT>>'
         const rootClassName = this.props.isFullWidth ? 'clearfix mb2' : 'clearfix mb2 lg-px4 md-px4 sm-px2';
         return (
             <div className={rootClassName}>
@@ -183,12 +195,17 @@ export class GenerateOrderForm extends React.Component<GenerateOrderFormProps, G
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className="pt1 flex mx-auto">
                         <MessageInput
                             label="Message"
                             initialMessage={initialMessage}
                             updateOrderMessage={dispatcher.updateOrderMessage.bind(dispatcher)}
                         />
+                        <div className="pt3">
+                            <div className="pl1">
+                                <HelpTooltip explanation={messageExplanation} />
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <HashInput

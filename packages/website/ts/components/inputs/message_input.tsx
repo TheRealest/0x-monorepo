@@ -40,11 +40,12 @@ export class MessageInput extends React.Component<MessageInputProps, MessageInpu
         const labelDisplay = this.props.shouldHideLabel ? 'hidden' : 'block';
         const hintText = this.props.hintText ? this.props.hintText : '';
         return (
-            <div className="overflow-hidden">
+            <div className="overflow-hidden" style={{ width: '100%' }}>
                 <TextField
                     id={`message-field-${this.props.label}`}
                     disabled={_.isUndefined(this.props.disabled) ? false : this.props.disabled}
                     fullWidth={true}
+                    multiLine={true}
                     hintText={hintText}
                     floatingLabelFixed={true}
                     floatingLabelStyle={{ color: colors.grey, display: labelDisplay }}
@@ -57,7 +58,7 @@ export class MessageInput extends React.Component<MessageInputProps, MessageInpu
         );
     }
     private _onOrderMessageUpdated(e: any): void {
-        const message = e.target.value.trim();
+        const message = e.target.value;
         const errMsg = '';
         this.setState({
             message,
