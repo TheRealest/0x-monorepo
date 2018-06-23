@@ -2,6 +2,7 @@ import { Web3Wrapper } from '@0xproject/web3-wrapper';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { Party } from 'ts/components/ui/party';
+import { OrderMessageImage } from 'ts/components/order_message_image';
 import { AssetToken, Token, TokenByAddress } from 'ts/types';
 import { configs } from 'ts/utils/configs';
 import { utils } from 'ts/utils/utils';
@@ -11,6 +12,7 @@ interface VisualOrderProps {
     takerAssetToken: AssetToken;
     makerToken: Token;
     takerToken: Token;
+    orderMessage: string;
     networkId: number;
     tokenByAddress: TokenByAddress;
     isMakerTokenAddressInRegistry: boolean;
@@ -59,6 +61,13 @@ export class VisualOrder extends React.Component<VisualOrderProps, VisualOrderSt
                         />
                     </div>
                 </div>
+                <OrderMessageImage
+                    orderMessage={this.props.orderMessage}
+                    makerAssetToken={this.props.makerAssetToken}
+                    takerAssetToken={this.props.takerAssetToken}
+                    makerToken={this.props.makerToken}
+                    takerToken={this.props.takerToken}
+                />
             </div>
         );
     }

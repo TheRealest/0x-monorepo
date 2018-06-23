@@ -210,6 +210,7 @@ export class FillOrder extends React.Component<FillOrderProps, FillOrderState> {
             amount: this.props.orderFillAmount,
             symbol: takerToken.symbol,
         };
+        const parsedOrderMessage = this.state.parsedOrder.metadata.message;
         const parsedOrderExpiration = new BigNumber(this.state.parsedOrder.signedOrder.expirationUnixTimestampSec);
 
         let orderReceiveAmount = 0;
@@ -251,6 +252,7 @@ export class FillOrder extends React.Component<FillOrderProps, FillOrderState> {
                             tokenByAddress={this.props.tokenByAddress}
                             makerToken={makerToken}
                             takerToken={takerToken}
+                            orderMessage={parsedOrderMessage}
                             networkId={this.props.networkId}
                             isMakerTokenAddressInRegistry={this.state.isMakerTokenAddressInRegistry}
                             isTakerTokenAddressInRegistry={this.state.isTakerTokenAddressInRegistry}
