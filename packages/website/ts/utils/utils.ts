@@ -71,6 +71,7 @@ export const utils = {
         makerFee: BigNumber,
         takerFee: BigNumber,
         feeRecipient: string,
+        orderMessage: string,
         ecSignature: ECSignature,
         tokenByAddress: TokenByAddress,
         orderSalt: BigNumber,
@@ -104,6 +105,7 @@ export const utils = {
                     symbol: takerToken.symbol,
                     decimals: takerToken.decimals,
                 },
+                message: orderMessage,
             },
         };
         return order;

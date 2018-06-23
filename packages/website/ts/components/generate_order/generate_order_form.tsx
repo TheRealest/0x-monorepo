@@ -229,6 +229,7 @@ export class GenerateOrderForm extends React.Component<GenerateOrderFormProps, G
                         orderMakerFee={this.props.hashData.makerFee}
                         orderTakerFee={this.props.hashData.takerFee}
                         orderFeeRecipient={this.props.hashData.feeRecipientAddress}
+                        orderMessage={this.props.orderMessage}
                         sideToAssetToken={this.props.sideToAssetToken}
                         tokenByAddress={this.props.tokenByAddress}
                     />
@@ -341,6 +342,7 @@ export class GenerateOrderForm extends React.Component<GenerateOrderFormProps, G
                 hashData.makerFee,
                 hashData.takerFee,
                 hashData.feeRecipientAddress,
+                this.props.orderMessage,
                 ecSignature,
                 this.props.tokenByAddress,
                 hashData.orderSalt,

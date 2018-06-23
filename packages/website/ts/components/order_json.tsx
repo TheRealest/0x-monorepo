@@ -21,6 +21,7 @@ interface OrderJSONProps {
     orderMakerFee: BigNumber;
     orderTakerFee: BigNumber;
     orderFeeRecipient: string;
+    orderMessage: string;
     sideToAssetToken: SideToAssetToken;
     tokenByAddress: TokenByAddress;
 }
@@ -48,6 +49,7 @@ export class OrderJSON extends React.Component<OrderJSONProps, OrderJSONState> {
             this.props.orderMakerFee,
             this.props.orderTakerFee,
             this.props.orderFeeRecipient,
+            this.props.orderMessage,
             this.props.orderECSignature,
             this.props.tokenByAddress,
             this.props.orderSalt,
@@ -169,6 +171,7 @@ You can see and fill it here: ${this.state.shareLink}`);
             this.props.orderMakerFee,
             this.props.orderTakerFee,
             this.props.orderFeeRecipient,
+            this.props.orderMessage,
             this.props.orderECSignature,
             this.props.tokenByAddress,
             this.props.orderSalt,

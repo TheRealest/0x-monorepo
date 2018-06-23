@@ -300,6 +300,14 @@ export function reducer(state: State = INITIAL_STATE, action: Action): State {
             };
         }
 
+        case ActionTypes.UpdateOrderMessage: {
+            return {
+                ...state,
+                orderMessage: action.data,
+            };
+        }
+
+
         case ActionTypes.UpdatePortalOnboardingStep: {
             const portalOnboardingStep = action.data;
             return {

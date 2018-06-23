@@ -74,6 +74,7 @@ export interface SignedOrder {
 export interface OrderMetadata {
     makerToken: OrderToken;
     takerToken: OrderToken;
+    message: string;
 }
 
 export interface Order {

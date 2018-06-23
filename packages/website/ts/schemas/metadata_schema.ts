@@ -3,7 +3,8 @@ export const orderMetadataSchema = {
     properties: {
         makerToken: { $ref: '/PortalTokenMetadata' },
         takerToken: { $ref: '/PortalTokenMetadata' },
+        message: { type: 'string' },
     },
-    required: ['makerToken', 'takerToken'],
+    required: ['makerToken', 'takerToken', 'message'],
     type: 'object',
 };
