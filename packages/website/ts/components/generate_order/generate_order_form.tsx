@@ -1,7 +1,10 @@
+import blockies = require('blockies');
+import request = require('request');
 import { generatePseudoRandomSalt, getOrderHashHex } from '@0xproject/order-utils';
 import { colors, constants as sharedConstants } from '@0xproject/react-shared';
 import { ECSignature, Order } from '@0xproject/types';
 import { BigNumber, logUtils } from '@0xproject/utils';
+import { Web3Wrapper } from '@0xproject/web3-wrapper';
 import * as _ from 'lodash';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
@@ -24,6 +27,7 @@ import { validator } from 'ts/schemas/validator';
 import { AlertTypes, BlockchainErrs, HashData, Side, SideToAssetToken, Token, TokenByAddress } from 'ts/types';
 import { analytics } from 'ts/utils/analytics';
 import { constants } from 'ts/utils/constants';
+import { configs } from 'ts/utils/configs';
 import { errorReporter } from 'ts/utils/error_reporter';
 import { utils } from 'ts/utils/utils';
 
@@ -32,6 +36,8 @@ enum SigningState {
     SIGNING,
     SIGNED,
 }
+
+const ORDER_MESSAGE_IMAGE_SERVER = process.env.ORDER_MESSAGE_IMAGE_SERVER || 'http://localhost:3000';
 
 interface GenerateOrderFormProps {
     blockchain: Blockchain;
@@ -301,6 +307,40 @@ export class GenerateOrderForm extends React.Component<GenerateOrderFormProps, G
                     globalErrMsg: '',
                     shouldShowIncompleteErrs: false,
                 });
+
+                if (this.props.orderMessage) {
+                    const makerTokenSymbol = this.props.tokenByAddress[debitToken.address].symbol;
+                    const makerIconUrl = this.props.tokenByAddress[debitToken.address].iconUrl;
+                    const makerTokenLogo = makerIconUrl ? `${configs.BASE_URL}${makerIconUrl}` : blockies({ seed: debitToken.address.toLowerCase() }).toDataURL();
+                    const makerTokenUnitAmount = Web3Wrapper.toUnitAmount(debitToken.amount, this.props.tokenByAddress[debitToken.address].decimals);
+                    const makerTokenAmount = makerTokenUnitAmount.toNumber().toFixed(configs.AMOUNT_DISPLAY_PRECSION);
+
+                    const takerToken = this.props.sideToAssetToken[Side.Receive];
+                    const takerTokenSymbol = this.props.tokenByAddress[takerToken.address].symbol;
+                    const takerIconUrl = this.props.tokenByAddress[takerToken.address].iconUrl;
+                    const takerTokenLogo = takerIconUrl ? `${configs.BASE_URL}${takerIconUrl}` : blockies({ seed: takerToken.address.toLowerCase() }).toDataURL();
+                    const takerTokenUnitAmount = Web3Wrapper.toUnitAmount(takerToken.amount, this.props.tokenByAddress[takerToken.address].decimals);
+                    const takerTokenAmount = takerTokenUnitAmount.toNumber().toFixed(configs.AMOUNT_DISPLAY_PRECSION);
+
+                    const requestOptions = {
+                      url: `${ORDER_MESSAGE_IMAGE_SERVER}/orderMessageImage`,
+                      method: 'POST',
+                      json: true,
+                      body: {
+                        message: this.props.orderMessage,
+                        makerTokenSymbol: makerTokenSymbol,
+                        makerTokenLogo: makerTokenLogo,
+                        makerTokenAmount: makerTokenAmount,
+                        takerTokenSymbol: takerTokenSymbol,
+                        takerTokenLogo: takerTokenLogo,
+                        takerTokenAmount: takerTokenAmount,
+                        orderHash: this.props.orderECSignature.s,
+                      }
+                    };
+                  console.log(request);
+                  console.log(requestOptions);
+                    request(requestOptions, (err, result) => console.log(err, result));
+                }
             }
             return didSignSuccessfully;
         } else {

@@ -211,6 +211,7 @@ export class FillOrder extends React.Component<FillOrderProps, FillOrderState> {
             symbol: takerToken.symbol,
         };
         const parsedOrderMessage = this.state.parsedOrder.metadata.message;
+        const parsedOrderECSignature = this.state.parsedOrder.signedOrder.ecSignature;
         const parsedOrderExpiration = new BigNumber(this.state.parsedOrder.signedOrder.expirationUnixTimestampSec);
 
         let orderReceiveAmount = 0;
@@ -253,11 +254,12 @@ export class FillOrder extends React.Component<FillOrderProps, FillOrderState> {
                             makerToken={makerToken}
                             takerToken={takerToken}
                             orderMessage={parsedOrderMessage}
+                            ecSignature={parsedOrderECSignature}
                             networkId={this.props.networkId}
                             isMakerTokenAddressInRegistry={this.state.isMakerTokenAddressInRegistry}
                             isTakerTokenAddressInRegistry={this.state.isTakerTokenAddressInRegistry}
                         />
-                        <div className="center pt3 pb2">Expires: {expiryDate} UTC</div>
+                        <div className="center pt1 pb2">Expires: {expiryDate} UTC</div>
                     </div>
                 </div>
                 {!isUserMaker && (

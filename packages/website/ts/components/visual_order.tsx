@@ -2,10 +2,13 @@ import { Web3Wrapper } from '@0xproject/web3-wrapper';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { Party } from 'ts/components/ui/party';
-import { OrderMessageImage } from 'ts/components/order_message_image';
+import MetaTags from 'react-meta-tags';
+import { ECSignature } from '@0xproject/types';
 import { AssetToken, Token, TokenByAddress } from 'ts/types';
 import { configs } from 'ts/utils/configs';
 import { utils } from 'ts/utils/utils';
+
+const ORDER_MESSAGE_IMAGE_SERVER = process.env.ORDER_MESSAGE_IMAGE_SERVER || 'http://localhost:3000';
 
 interface VisualOrderProps {
     makerAssetToken: AssetToken;
@@ -13,6 +16,7 @@ interface VisualOrderProps {
     makerToken: Token;
     takerToken: Token;
     orderMessage: string;
+    ecSignature: ECSignature;
     networkId: number;
     tokenByAddress: TokenByAddress;
     isMakerTokenAddressInRegistry: boolean;
@@ -26,6 +30,7 @@ export class VisualOrder extends React.Component<VisualOrderProps, VisualOrderSt
         const allTokens = _.values(this.props.tokenByAddress);
         const makerImage = this.props.makerToken.iconUrl;
         const takerImage = this.props.takerToken.iconUrl;
+        const orderMessageImageSrc = `${ORDER_MESSAGE_IMAGE_SERVER}/orderMessageImage?orderHash=${this.props.ecSignature.s}`
         return (
             <div>
                 <div className="clearfix">
@@ -61,13 +66,17 @@ export class VisualOrder extends React.Component<VisualOrderProps, VisualOrderSt
                         />
                     </div>
                 </div>
-                <OrderMessageImage
-                    orderMessage={this.props.orderMessage}
-                    makerAssetToken={this.props.makerAssetToken}
-                    takerAssetToken={this.props.takerAssetToken}
-                    makerToken={this.props.makerToken}
-                    takerToken={this.props.takerToken}
-                />
+                { this.props.orderMessage ? (
+                    <div>
+                        <div className="center pt3 pb2">
+                            <img src={orderMessageImageSrc} />
+                        </div>
+                        <MetaTags>
+                            <meta property="og:image" content={orderMessageImageSrc} />
+                        </MetaTags>
+                    </div>
+                  ) : null
+                }
             </div>
         );
     }
